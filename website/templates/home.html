@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>CS340 Town Simulator</h1>
+        <h2>Runswick</h2>
+        <h4>
+            <a href="/edit">Edit Town Page</a>
+        </h4>
+        <h4>
+            <a href="/shop/1">Shop Page</a>
+        </h4>
+        <h4>
+            <a href="/npc">NPC page</a>
+        </h4>
+        <img src="{{url_for('static', filename='Images/runswick.jpg')}}">
+        <p>
+        Settled next to a river, the settlement of Doonatel is home to vampires lead by Knight Evatt.
+        This settlement wasn't built by a river by accident, as it has a dark history, which is of great importance to the people of Doonatel and its success.
+        </p>
+        <p>
+        The settlement itself looks mundane. With its gray rooftops, worn limestone walls and large cobwebs, Doonatel has a macabre atmosphere.
+        The main attraction is the greenhouse, which was built 25 years ago and designed by giants.        
+        </p>
+        <p>
+        Doonatel has an advancing economy, which is mainly supported by farming, cooking and animal training. But their biggest strengths are rare animal breeding and ancient wine brewing techniques.
+        However, Doonatel lacks people skilled in jewelcrafting. Despite its strengths and weaknesses, Doonatel is most likely headed towards a flourishing future under the leadership of Knight Evatt. But this remains to be seen.    
+        </p>
+        <h3>Shops and Attractions</h3>   
+        <ul>
+            {% for shop in shops %}
+            <a href="/shop/{{shop.1}}"><li>{{ shop.0 }}</li></a>
+            {% endfor %}
+        </ul>  
+    </body>
+</html>

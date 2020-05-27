@@ -1,0 +1,47 @@
+#NPCdialog{
+    margin-bottom: 5%;
+    padding: 0.5%;
+    position: relative;
+    border-style: groove;
+    width: 42%;
+    top: 20%;
+}
+
+#NPCquest{
+    margin: .5%;
+    padding: .5%;
+    position: relative;
+    border-style: groove;
+    width: 42%;
+    top: 35%;
+}
+
+.menu{
+    padding: 5px
+}
+
+#boxes{
+    width: 33%;
+    left: 42%;
+    position: absolute;
+    top: 25%;
+}
+
+.mod{
+    margin: .5%;
+    padding: .5%;
+    position: relative;
+    width: 42%;
+    left: 24%;
+    top: 35%;
+}
+
+#questReward{
+    border-style: groove;
+}
+
+#npc{
+    position: absolute;
+    left: 38%;
+    top: 25%;
+}

@@ -1,0 +1,63 @@
+<html>
+<head><title>lmao</title></head>
+<h1> stuff happening</h1>
+
+<!-- <table border = '1'>
+	<thead>
+		<th>Shop ID</th>
+		<th>Shop Keep</th>
+		<th>keep id</th>
+		<th>Shop Name</th>
+		<th>Shop Description</th>
+	</thead>
+	<tbody>
+		{% for r in rows %}
+		<tr>
+			<td> {{ r.0 }} </td>
+			<td> {{ r.1 }} </td>
+			<td> {{ r.2 }} </td>
+			<td> {{ r.3 }} </td>
+			<td> {{ r.4 }} </td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table> -->
+
+<form action="/test" method="post">
+<select name="sname">
+	{% for r in rows %}
+	<option> {{ r.0 }} </option>
+	{% endfor %}
+</select>
+<input type="submit">
+</form>
+
+{% if name != Null %}
+<h2> {{ name }} </h2>
+
+<table border="1">
+	<thead>
+		<th>name</th>
+		<th>value</th>
+		<th>quantity</th>
+		<th>description</th>
+		<th>weight</th>
+	</thead>
+
+	<tbody>
+
+		{% for x in inv %}
+		<tr>
+			<td> {{ x.0 }} </td>
+			<td> {{ x.1 }} </td>
+			<td> {{ x.2 }} </td>
+			<td> {{ x.3 }} </td>
+			<td> {{ x.4 }} </td>
+		</tr>
+		{% endfor %}
+	
+	</tbody>
+{% endif %}
+
+</html>
+

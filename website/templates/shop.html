@@ -1,0 +1,84 @@
+<html>
+<head>
+	<title>Shops</title>
+	<style>
+            table, th, td {
+                border: 1px solid black;
+                width: 50%;
+            }
+        </style>
+</head>
+<body>
+	<h1>CS340 Town Simulator</h1>
+
+<!-- <table border = '1'>
+        <thead>
+                <th>Shop ID</th>
+                <th>Shop Keep</th>
+                <th>keep id</th>
+                <th>Shop Name</th>
+                <th>Shop Description</th>
+        </thead>
+        <tbody>
+                {% for r in rows %}
+                <tr>
+                        <td> {{ r.0 }} </td>
+                        <td> {{ r.1 }} </td>
+                        <td> {{ r.2 }} </td>
+                        <td> {{ r.3 }} </td>
+                        <td> {{ r.4 }} </td>
+                </tr>
+                {% endfor %}
+        </tbody>
+</table> -->
+
+<!-- <form action="/shop" method="post">
+<select name="sname">
+        {% for r in rows %}
+        <option> {{ r.0 }} </option>
+        {% endfor %}
+</select>
+<input type="submit">
+</form> -->
+
+        <h4>
+                <a href="/">Back</a>
+        </h4>  
+
+        {% if name != Null %}
+        <h2>Runswick - {{ name }}</h2>
+
+        <h3>NPCs</h3>
+        <ul>
+            <a href="/~pater/npc.html"><li>Jacob the tanner</li></a>
+            <a href="/~pater/npc.html"><li>Nezeim Bhammein</li></a>
+            <a href="/~pater/npc.html"><li>Althea the sorceror</li></a>
+        </ul>
+
+        <h2>Goods:</h2>
+        <table>
+                <thead>
+                        <th>name</th>
+                        <th>value</th>
+                        <th>quantity</th>
+                        <th>description</th>
+                        <th>weight</th>
+                </thead>
+
+                <tbody>
+
+                        {% for x in inv %}
+                        <tr>
+                                <td> {{ x.0 }} </td>
+                                <td> {{ x.1 }} </td>
+                                <td> {{ x.2 }} </td>
+                                <td> {{ x.3 }} </td>
+                                <td> {{ x.4 }} </td>
+                        </tr>
+                        {% endfor %}
+
+                </tbody>
+        {% endif %}
+
+        </body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                width: 50%;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>CS340 Town Simulator</h1>
+        <h2>Edit Runswick</h2>
+        <h4>
+            <a href="/">Back</a>
+        </h4>    
+        <h2>Runswick Shops (working, connected to db)</h2>
+        <table>
+            <thead>
+                <th>Name</th>
+                <th>Shopkeep</th>
+                <th>Description</th>
+            </thead>
+
+            <tbody>
+                {% for shop in shops %}
+                <tr>
+                        <td> {{ shop.0 }} </td>
+                        <td> {{ shop.1 }} </td>
+                        <td> {{ shop.2 }} </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+
+        <h3>Add a Shop to Runswick</h3>
+        <form>
+            <label class="shopForm" id="shopName">Shop Name:</label><br>
+            <input class="shopForm" type="text" id="shopName" value="name"><br>
+            <label class="shopForm" id="shopKeep">Choose a shop keeper:</label><br>
+            <select class="shopForm" id="shopNpc">
+                <option value="jacob_the_tanner">Jacob the tanner</option>
+                <option value="nezeim_bhammein">Nezeim Bhammein</option>
+                <option value="althea_the_sorceror">Althea the sorceror</option>
+            </select><br>
+            <label class="shopForm" id="shopDesc">Description of shop:</label><br>
+            <input class="shopForm" type="text" value="Describe the shop"><br>
+            <input class="shopForm" type="submit" value="Submit">
+        </form>
+        
+
+        <h2>Runswick Trade Goods (working, connected to db)</h2>
+        <table>
+            <thead>
+                <th>Good</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Description</th>
+                <th>Weight</th>
+                <th>Delete from Runswick</th>
+            </thead>
+
+            <tbody>
+                {% for good in tradeGoods %}
+                <tr>
+                        <td> {{ good.0 }} </td>
+                        <td> {{ good.1 }} </td>
+                        <td> {{ good.2 }} </td>
+                        <td> {{ good.3 }} </td>
+                        <td> {{ good.4 }} </td>
+                        <td><form action="/edit/deleteTradeGood/{{good.5}}" method="POST"><input type="submit" value="Delete"></form></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+        <h3>Add A New Trade Good to Runswick (working)</h3>
+        <form action="/edit/createTradeGood" method="POST">
+            <label class="invMng">Name:</label> <input type="text" value="Item Name" name="name"> <br>
+            <label class="invMng">Price:</label> <input type="number" value="0" name="price"> <br>
+            <label class="invMng">Quantity</label> <input type="number" value="0" name="quantity"> <br>
+            <label class="invMng">Description</label> <input type="text" value="Item Description" name="description"> <br>
+            <label class="invMng">Weight</label> <input type="number" value="0" name="weight"> <br>
+            <input type="submit" value="Add">
+        </form>
+
+
+        <h2>Shop Inventory Management (connected to db, edit not working yet)</h2>
+        <label class="invMng">Select a shop to manage:</label>
+        <form action="/edit/shopInventory" method="POST">
+            <select name="sname">
+                    {% for shop in shops %}
+                    <option> {{ shop.0 }} </option>
+                    {% endfor %}
+            </select>
+            <input type="submit">
+        </form>
+
+
+        <form>
+            <table>
+                <thead>
+                    <th>Good</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Description</th>
+                    <th>Weight</th>
+                    <th>Edit</th>
+                    <th>Remove from Shop</th>
+                </thead>
+    
+                <tbody>
+                    {% for item in shopInv %}
+                    <tr>
+                            <td> {{ item.0 }} </td>
+                            <td> {{ item.1 }} </td>
+                            <td> {{ item.2 }} </td>
+                            <td> {{ item.3 }} </td>
+                            <td> {{ item.4 }} </td>
+                            <td><form><input type="submit" value="Edit"></form></td>
+                            <td><form><input type="submit" value="Delete"></form></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+
+            <h3>Edit An Item</h3>
+            <form>
+                <table>
+                    <tr>
+                    <td>Good</td>
+                    <td>Price</td>
+                    <td>Quantity</td>
+                    <td>Description</td>
+                    <td>Weight</td>
+                    <td>Submit Changes</td>
+                </tr>
+                    <tr>
+                    <td><input type="text" value="Rope"></td>
+                    <td><input type="number" vlue="5"></td>
+                    <td><input type="number" value="3"></td>
+                    <td><input type="text" value="length of 50 feet"></td>
+                    <td><input type="number" value="0.2"></td>
+                    <td><input type="submit" value="Submit"></td>
+                </tr>
+                </table>
+            </form>
+            
+
+            <h3>Add a Trade Good to a Shop</h3>
+            
+            <form action="/edit/addTradeGoodToShop" method="POST">
+                Add Item <select class="addItem">
+                    <option>Rope</option>
+                    <option>Battleaxe</option>
+                    <option>Bedroll</option>
+                </select> to Shop <select class="addItem">
+                    <option>Gnome Depot</option>
+                    <option>Balthar's Blunts and Blades</option>
+                    <option>Hammer Time</option>
+                </select>
+                <input type="submit" value="Add">
+            </form>    
+        </form>
+
+        <h2>Runswick NPCs</h3>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Greeting</th>
+                <th>Found in</th>
+            </tr>
+            <tr>
+                <td>Jacob the tanner</td>
+                <td>Hello there, what can I do for you? I'd really rather see you around my shop why don't you come by sometime?</td>
+                <td>Tavern, Tannery</td>
+            </tr>
+            <tr>
+                <td>Nezeim Bhammein</td>
+                <td>Hello traveler, good to see new faces around the town every now and then.</td>
+                <td>Tavern, Fishmarket</td>
+            </tr>
+            <tr>
+                <td>Althea the sorceror</td>
+                <td>Hmm, perhaps I can find a use for a fighter like you..</td>
+                <td>Tavern</td>
+            </tr>
+        </table>
+
+        <h3>Add an NPC</h3>
+        <form>
+            <label for="npcName">NPC Name:</label><br>
+            <input type="text" id="npcName" name="npcName"><br>
+            <label for="greeting">Greeting:</label><br>
+            <input type="text" id="greeting" name="greeting"><br>
+            <label for="foundin">Found in:</label><br>
+            <input type="checkbox" id="tavern" name="foundin" value="tavern">
+            <label for="tavern">Tavern</label><br>
+            <input type="checkbox" id="fishmarket" name="foundin" value="fishmarket">
+            <label for="tavern">Fishmarket</label><br>
+            <input type="checkbox" id="tannery" name="foundin" value="tannery">
+            <label for="tavern">Tannery</label><br>
+            <input type="checkbox" id="generalStore" name="foundin" value="generalStore">
+            <label for="tavern">General Store</label><br>
+            <input type="submit" value="Submit">
+        </form>
+        <h3>Add an NPC to a Shop</h3>
+        <form>
+            <label for="npc">Add NPC</label>
+            <select id="npc">
+                <option value="jacob_the_tanner">Jacob the tanner</option>
+                <option value="nezeim_bhammein">Nezeim Bhammein</option>
+                <option value="althea_the_sorceror">Althea the sorceror</option>
+            </select>
+            <label for="shop">to Shop</label>
+            <select id="shop">
+                <option value="tavern">Tavern</option>
+                <option value="fishmarket">Fishmarket</option>
+                <option value="tannery">Tannery</option>
+                <option value="general_store">General Store</option>
+            </select>
+            <input type="submit" value="Submit">
+        </form>
+        <h2>Runswick Quests</h3>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Reward</th>
+                    <th>Given by</th>
+                </tr>
+                <tr>
+                    <td>Hunt local poachers</td>
+                    <td>A band of poachers have been killing the local wildlife without regard for the law. Hunt them down and you'll receive a mighty reward.</td>
+                    <td>Anything you can loot from their hideout plus 150 gold pieces.</td>
+                    <td>Jacob the Tanner</td>
+                </tr>
+                <tr>
+                    <td>Protect Nezeim's trading caravan from bandits.</td>
+                    <td>Recently bandits have made Nezeim's trading operation difficult to maintain. Go along with one of his caravans, protect it from bandit attack, and you'll receive a portion of the caravan profits.</td>
+                    <td>10% of the caravans profits.</td>
+                    <td>Nezeim Bhammein</td>
+                </tr>
+            </table>
+            <h3>Add a Quest</h3>
+            <form>
+                <label for="questName">Quest Name:</label><br>
+                <input type="text" id="questName" name="questName"><br>
+                <label for="description">Description:</label><br>
+                <input type="text" id="description" name="description"><br>
+                <label for="reward">Reward:</label><br>
+                <input type="text" id="reward" name="reward"><br>
+                <label for="givenby">Given by:</label><br>
+                <select id="npc">
+                    <option value="jacob_the_tanner">Jacob the tanner</option>
+                    <option value="nezeim_bhammein">Nezeim Bhammein</option>
+                    <option value="althea_the_sorceror">Althea the sorceror</option>
+                </select>
+                <input type="submit" value="Submit">
+            </form>
+            <h3>Add Quest to NPC</h3>
+            <form>
+                <label for="shop">Add Quest</label>
+                <select id="shop">
+                    <option value="1">Protect Nezeim's trading caravan from bandits</option>
+                    <option value="2">Hunt local poachers</option>
+                </select>
+                <label for="npc">to NPC</label>
+                <select id="npc">
+                    <option value="jacob_the_tanner">Jacob the tanner</option>
+                    <option value="nezeim_bhammein">Nezeim Bhammein</option>
+                    <option value="althea_the_sorceror">Althea the sorceror</option>
+                </select>
+                <input type="submit" value="Submit">
+            </form>
+    </body>
+</html>
+
