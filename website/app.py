@@ -33,7 +33,7 @@ def createTradeGood():
     query = "INSERT INTO TradeGoods (name, value, quantity, description, weight) VALUES ('%s', '%d', '%d', '%s', '%d');" % (name, int(price), int(quantity), description, int(weight))
     print(query)
     execute_query(db_connection, query).fetchall()
-    return redirect("/edit", code=200)
+    return redirect("/edit", code=302)
 
 # deletes a tradegood from runswick entirely
 @app.route('/edit/deleteTradeGood/<id>', methods=['POST'])

@@ -58,13 +58,14 @@
                 <th>Quantity</th>
                 <th>Description</th>
                 <th>Weight</th>
+                <th>Edit</th>
                 <th>Delete from Runswick</th>
             </thead>
 
             <tbody>
                 {% for good in tradeGoods %}
                 <tr>
-		<form action="/edit/editTradeGood" method="POST">
+		    <form action="/edit/editTradeGood" method="POST">
                         <td><input type="text" value="{{ good.0 }}" name="good"></td>
                         <td><input type="number" value="{{ good.1 }}" name="price"></td>
                         <td><input type="number" value="{{ good.2 }}" name="quant"></td>
@@ -122,37 +123,13 @@
                             <td> {{ item.2 }} </td>
                             <td> {{ item.3 }} </td>
                             <td> {{ item.4 }} </td>
-			    <td><form><input type="submit" value="Edit"></form></td>
+			                <td><form><input type="submit" value="Edit"></form></td>
                             <td><form><input type="submit" value="Delete"></form></td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
             
-
-            <h3>Edit An Item</h3>
-            <form>
-                <table>
-                    <tr>
-                    <td>Good</td>
-                    <td>Price</td>
-                    <td>Quantity</td>
-                    <td>Description</td>
-                    <td>Weight</td>
-                    <td>Submit Changes</td>
-                </tr>
-                    <tr>
-                    <td><input type="text" value="Rope"></td>
-                    <td><input type="number" value="5"></td>
-                    <td><input type="number" value="3"></td>
-                    <td><input type="text" value="length of 50 feet"></td>
-                    <td><input type="number" value="0.2"></td>
-                    <td><input type="submit" value="Submit"></td>
-                </tr>
-                </table>
-            </form>
-            
-
             <h3>Add a Trade Good to a Shop</h3>
             
             <form action="/edit/addTradeGoodToShop" method="POST">
