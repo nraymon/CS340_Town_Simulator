@@ -73,6 +73,92 @@ def editShopInventory():
         return render_template('edit.html', shops=shops, shopInv=shopInv)
 
 
+#add npc to db
+@app.route('/edit/addNPC', methods=['POST'])
+def editAddNPC():
+    db_connection = connect_to_database()
+
+    # assigns the information received from the webpage
+    npcName = request.form["npcName"]
+    greet = request.form["greeting"]
+    place = request.form["foundin"]
+
+    # builds the query and adds the new npc with the information gathered from the webpage
+    query = "INSERT INTO NPCs (name, greeting) VALUES ('%s', '%s');" % (npcName, greet)
+    execute_query(db_connection, query)
+    return redirect("/edit", code=302)
+
+
+# add quests to the database
+@app.route('/edit/addQuest', methods=['POST'])
+def editAddQuest():
+    db_connection = connect_to_database()
+
+    # assigns the information received from the webpage
+    qName = request.form["questName"]
+    qDesc = request.form["description"]
+    qRew = request.form["reward"]
+
+    # builds the query to insert the desired information from the webpage
+    query = "INSERT INTO Quests (name, description, reward) VALUES ('%s', '%s', '%s')" % (qName, qDesc, qRew)
+    execute_query(db_connection, query)
+    return redirect("/edit", code=302)
+
+
+# allows the user to edit the values of a trade good
+@app.route('/edit/editTradeGood', methods=['POST'])
+def editTradeGood():
+    db_connection = connect_to_database()
+
+    if request.method == 'POST':
+        good = request.form["good"]
+        price = request.form["price"]
+        quant = request.form["quant"]
+        desc = request.form["desc"]
+        weight = request.form["weight"]
+        iden = request.form["id"]
+
+        query = "UPDATE TradeGoods SET name = '%s', value = '%s', quantity = '%s', description = '%s', weight = '%s' WHERE id = '%s'" % (good, price, quant, desc, weight, iden)
+
+        execute_query(db_connection, query)
+        return redirect("/edit", code=302)
+
+
+# this adds a TradeGood item to a Shop's inventory
+@app.route('/edit/addTradeGoodToShop', methods=['POST'])
+def addTradeGoodToShop():
+    db_connection = connect_to_database()
+
+    if request.method == 'POST':
+
+        item = request.form["itemToShop"]
+        shop = request.form["shopToItem"]
+
+        print(item)
+        print(shop)
+
+        query = "INSERT INTO Inventories (goodId, shopId) VALUES ('%s', '%s');" % (item, shop)
+        execute_query(db_connection, query)
+
+        return redirect("/edit", code=302)
+
+
+# adds a quest to an NPC
+@app.route('/edit/addQuestToNpc', methods=['POST'])
+def addQuestToNpc():
+    db_connection = connect_to_database()
+
+    if request.method == 'POST':
+
+        quest = request.form["questToNpc"]
+        npc = request.form["npcToQuest"]
+
+        query = "INSERT INTO NpcQuests (npcId, questId) VALUES ('%s', '%s');" % (npc, quest)
+        execute_query(db_connection, query)
+
+        return redirect("/edit", code=302)
+
+
 # basic edit screen rendering
 @app.route('/edit', methods=['POST', 'GET'])
 def edit():
@@ -86,8 +172,15 @@ def edit():
         # get all trade goods for table
         query = "SELECT name, value, quantity, description, weight, id FROM TradeGoods"
         tradeGoods = execute_query(db_connection, query).fetchall()
+
+        query = "SELECT name, greeting, id FROM NPCs"
+        npcs = execute_query(db_connection, query).fetchall()
+
+        query = "SELECT id, name FROM Quests;"
+        quests = execute_query(db_connection, query).fetchall()
+
         # render with dropdown data
-        return render_template('edit.html', shops=shops, tradeGoods=tradeGoods)
+        return render_template('edit.html', shops=shops, tradeGoods=tradeGoods, npcs=npcs, quests = quests)
 
 
 # shops - edited by ryan to display info from id rather than selecting from drop down so we can direct users to individual shop pages

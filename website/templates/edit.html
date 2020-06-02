@@ -64,11 +64,14 @@
             <tbody>
                 {% for good in tradeGoods %}
                 <tr>
-                        <td> {{ good.0 }} </td>
-                        <td> {{ good.1 }} </td>
-                        <td> {{ good.2 }} </td>
-                        <td> {{ good.3 }} </td>
-                        <td> {{ good.4 }} </td>
+		<form action="/edit/editTradeGood" method="POST">
+                        <td><input type="text" value="{{ good.0 }}" name="good"></td>
+                        <td><input type="number" value="{{ good.1 }}" name="price"></td>
+                        <td><input type="number" value="{{ good.2 }}" name="quant"></td>
+                        <td><input type="text" value="{{ good.3 }}" name="desc"></td>
+                        <td><input type="number" value="{{ good.4 }}" name="weight"></td>
+			<td style="display:none;"><input type="text" value="{{ good.5 }}" name="id"></td>
+			<td><input type=submit value = "Edit"></form></td>
                         <td><form action="/edit/deleteTradeGood/{{good.5}}" method="POST"><input type="submit" value="Delete"></form></td>
                 </tr>
                 {% endfor %}
@@ -119,7 +122,7 @@
                             <td> {{ item.2 }} </td>
                             <td> {{ item.3 }} </td>
                             <td> {{ item.4 }} </td>
-                            <td><form><input type="submit" value="Edit"></form></td>
+			    <td><form><input type="submit" value="Edit"></form></td>
                             <td><form><input type="submit" value="Delete"></form></td>
                     </tr>
                     {% endfor %}
@@ -140,7 +143,7 @@
                 </tr>
                     <tr>
                     <td><input type="text" value="Rope"></td>
-                    <td><input type="number" vlue="5"></td>
+                    <td><input type="number" value="5"></td>
                     <td><input type="number" value="3"></td>
                     <td><input type="text" value="length of 50 feet"></td>
                     <td><input type="number" value="0.2"></td>
@@ -153,27 +156,37 @@
             <h3>Add a Trade Good to a Shop</h3>
             
             <form action="/edit/addTradeGoodToShop" method="POST">
-                Add Item <select class="addItem">
-                    <option>Rope</option>
-                    <option>Battleaxe</option>
-                    <option>Bedroll</option>
-                </select> to Shop <select class="addItem">
-                    <option>Gnome Depot</option>
-                    <option>Balthar's Blunts and Blades</option>
-                    <option>Hammer Time</option>
+                Add Item <select name="itemToShop" class="addItem">i
+		<!--<form action="/edit/addTradeGoodToShop" method="POST">-->
+		{% for good in tradeGoods %}
+		<!--<form action="/edit/addTradeGoodToShop" method="POST">-->
+                    <option value="{{ good.5 }}">{{ good.0 }}</option>
+		{% endfor %}
                 </select>
+		 to Shop <select name="shopToItem" class="addItem">
+		    {% for shop in shops %}
+                    <option value="{{ shop.3 }}">{{ shop.0 }}</option>
+                   {% endfor %} 
+                   </select>
                 <input type="submit" value="Add">
-            </form>    
+            </form>
         </form>
 
-        <h2>Runswick NPCs</h3>
+        <h2>Runswick NPCs</h2>
         <table>
             <tr>
                 <th>Name</th>
                 <th>Greeting</th>
                 <th>Found in</th>
             </tr>
-            <tr>
+
+	    {% for n in npcs %}
+	    <tr>
+		<td> {{ n.0 }} </td>
+		<td> {{ n.1 }} </td>
+	    </tr>
+	    {% endfor %}
+          <!--  <tr>
                 <td>Jacob the tanner</td>
                 <td>Hello there, what can I do for you? I'd really rather see you around my shop why don't you come by sometime?</td>
                 <td>Tavern, Tannery</td>
@@ -187,11 +200,11 @@
                 <td>Althea the sorceror</td>
                 <td>Hmm, perhaps I can find a use for a fighter like you..</td>
                 <td>Tavern</td>
-            </tr>
+            </tr> -->
         </table>
 
         <h3>Add an NPC</h3>
-        <form>
+        <form action="/edit/addNPC" method="POST">
             <label for="npcName">NPC Name:</label><br>
             <input type="text" id="npcName" name="npcName"><br>
             <label for="greeting">Greeting:</label><br>
@@ -224,7 +237,7 @@
             </select>
             <input type="submit" value="Submit">
         </form>
-        <h2>Runswick Quests</h3>
+        <h2>Runswick Quests</h2>
             <table>
                 <tr>
                     <th>Name</th>
@@ -246,7 +259,7 @@
                 </tr>
             </table>
             <h3>Add a Quest</h3>
-            <form>
+            <form action="/edit/addQuest" method="post">
                 <label for="questName">Quest Name:</label><br>
                 <input type="text" id="questName" name="questName"><br>
                 <label for="description">Description:</label><br>
@@ -262,17 +275,18 @@
                 <input type="submit" value="Submit">
             </form>
             <h3>Add Quest to NPC</h3>
-            <form>
+            <form action="/edit/addQuestToNpc" method="POST">
                 <label for="shop">Add Quest</label>
-                <select id="shop">
-                    <option value="1">Protect Nezeim's trading caravan from bandits</option>
-                    <option value="2">Hunt local poachers</option>
+                <select name="questToNpc" id="shop">
+		{% for q in quests %}
+                    <option value="{{ q.0 }}">{{ q.1 }}</option>
+                {% endfor %}
                 </select>
                 <label for="npc">to NPC</label>
-                <select id="npc">
-                    <option value="jacob_the_tanner">Jacob the tanner</option>
-                    <option value="nezeim_bhammein">Nezeim Bhammein</option>
-                    <option value="althea_the_sorceror">Althea the sorceror</option>
+                <select name="npcToQuest" id="npc">
+		{% for n in npcs %}
+                    <option value="{{ n.2 }}">{{ n.0 }}</option>
+            	{% endfor %}
                 </select>
                 <input type="submit" value="Submit">
             </form>
