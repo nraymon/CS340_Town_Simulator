@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Edit Shop Inventory</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    </head>
+    <body>
+        <ul class="headerList">
+            <li class="headerListItem"><a class="headerListLink" href="/">Home</a></li>
+            <li class="headerListItem"><a class="headerListLink" href="/edit">Edit Town</a></li>
+            <li class="headerListItem"><a class="headerListLink" href="/editShopInventory">Edit Shop Inventories</a></li>
+        </ul>
+        <h2>Runswick Shop Inventory Management</h2>
+        <label class="invMng">Select a shop to manage:</label>
+        <form action="/editShopInventory" method="POST">
+            <select name="sname">
+                    {% for shop in shops %}
+                    <option {% if shop.0==name %} selected{% endif %}> {{ shop.0 }} </option>
+                    {% endfor %}
+            </select>
+            <input type="submit">
+        </form>
+
+            <table>
+                <thead>
+                    <th>Good</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Description</th>
+                    <th>Weight</th>
+                    <th>Remove from Shop</th>
+                </thead>
+
+                <tbody>
+                    {% for item in shopInv %}
+                    <tr>
+                            <td> {{ item.0 }} </td>
+                            <td> {{ item.1 }} </td>
+                            <td> {{ item.2 }} </td>
+                            <td> {{ item.3 }} </td>
+                            <td> {{ item.4 }} </td>
+                            <td><form action="/deleteTradeGoodFromShop/{{item.5}}/{{name}}" method="POST"><input type="submit" value="Delete"></form></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <h3>Add a Trade Good to a Shop</h3>
+            
+            <form action="/addTradeGoodToShop" method="POST">
+                Add Item <select name="itemToShop" class="addItem">i
+        <!--<form action="/edit/addTradeGoodToShop" method="POST">-->
+        {% for good in tradeGoods %}
+        <!--<form action="/edit/addTradeGoodToShop" method="POST">-->
+                    <option value="{{ good.5 }}">{{ good.0 }}</option>
+        {% endfor %}
+                </select>
+        to Shop <select name="shopToItem" class="addItem">
+            {% for shop in shops %}
+                    <option value="{{ shop.3 }}" {% if shop.0==name %} selected{% endif %}>{{ shop.0 }}</option>
+                {% endfor %} 
+                </select>
+                <input type="submit" value="Add">
+            </form>
+    </body>
+</html>

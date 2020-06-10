@@ -1,46 +1,15 @@
 <html>
 <head>
-	<title>Shops</title>
-	<style>
-            table, th, td {
-                border: 1px solid black;
-                width: 50%;
-            }
-        </style>
+        <title>Shops</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
 </head>
 <body>
+        <ul class="headerList">
+                <li class="headerListItem"><a class="headerListLink" href="/">Home</a></li>
+                <li class="headerListItem"><a class="headerListLink" href="/edit">Edit Town</a></li>
+                <li class="headerListItem"><a class="headerListLink" href="/editShopInventory">Edit Shop Inventories</a></li>
+        </ul>
 	<h1>CS340 Town Simulator</h1>
-
-<!-- <table border = '1'>
-        <thead>
-                <th>Shop ID</th>
-                <th>Shop Keep</th>
-                <th>keep id</th>
-                <th>Shop Name</th>
-                <th>Shop Description</th>
-        </thead>
-        <tbody>
-                {% for r in rows %}
-                <tr>
-                        <td> {{ r.0 }} </td>
-                        <td> {{ r.1 }} </td>
-                        <td> {{ r.2 }} </td>
-                        <td> {{ r.3 }} </td>
-                        <td> {{ r.4 }} </td>
-                </tr>
-                {% endfor %}
-        </tbody>
-</table> -->
-
-<!-- <form action="/shop" method="post">
-<select name="sname">
-        {% for r in rows %}
-        <option> {{ r.0 }} </option>
-        {% endfor %}
-</select>
-<input type="submit">
-</form> -->
-
         <h4>
                 <a href="/">Back</a>
         </h4>  

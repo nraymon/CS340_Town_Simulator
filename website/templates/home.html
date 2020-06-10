@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <title>Home</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    </head>
     <body>
+        <ul class="headerList">
+            <li class="headerListItem"><a class="headerListLink" href="/">Home</a></li>
+            <li class="headerListItem"><a class="headerListLink" href="/edit">Edit Town</a></li>
+            <li class="headerListItem"><a class="headerListLink" href="/editShopInventory">Edit Shop Inventories</a></li>
+        </ul>
         <h1>CS340 Town Simulator</h1>
+        <p>Welcome to our D&D town simulator. You can use this site to easily simulate a town for your next D&D campaign. Start by exploring the Shops and Attractions listed below where you'll find information about goods for sale and npcs to talk to at each location. If you want to customize Runswick you can jump straight to the edit screen and start adding your own content.</p>
         <h2>Runswick</h2>
-        <h4>
-            <a href="/edit">Edit Town Page</a>
-        </h4>
-        <h4>
-            <a href="/shop/1">Shop Page</a>
-        </h4>
-        <h4>
-            <a href="/npc">NPC page</a>
-        </h4>
-        <img src="{{url_for('static', filename='Images/runswick.jpg')}}">
+        <img src="{{ url_for('static',filename='images/runswick.jpg') }}"">
         <p>
         Settled next to a river, the settlement of Doonatel is home to vampires lead by Knight Evatt.
         This settlement wasn't built by a river by accident, as it has a dark history, which is of great importance to the people of Doonatel and its success.
