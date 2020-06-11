@@ -19,9 +19,9 @@
 
         <h3>NPCs</h3>
         <ul>
-            <a href="/~pater/npc.html"><li>Jacob the tanner</li></a>
-            <a href="/~pater/npc.html"><li>Nezeim Bhammein</li></a>
-            <a href="/~pater/npc.html"><li>Althea the sorceror</li></a>
+	{% for x in npcs %}
+            <a href="/npc/{{ x.0}}"><li>{{ x.1 }}</li></a>
+        {% endfor %}
         </ul>
 
         <h2>Goods:</h2>
