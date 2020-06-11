@@ -18,9 +18,9 @@ def home():
     return render_template('home.html', shops=snames)
 
 # npc
-@app.route('/npc', methods=['GET'])
-def npc():
-    return render_template('npc.html')
+#@app.route('/npc', methods=['GET'])
+#def npc():
+#    return render_template('npc.html')
 
 @app.route('/edit/createTradeGood', methods=['POST'])
 def createTradeGood():
@@ -33,7 +33,7 @@ def createTradeGood():
     query = "INSERT INTO TradeGoods (name, value, quantity, description, weight) VALUES ('%s', '%d', '%d', '%s', '%d');" % (name, int(price), int(quantity), description, int(weight))
     print(query)
     execute_query(db_connection, query).fetchall()
-    return redirect("/edit", code=200)
+    return redirect("/edit", code=302)
 
 # deletes a tradegood from runswick entirely
 @app.route('/edit/deleteTradeGood/<id>', methods=['POST'])
@@ -195,7 +195,25 @@ def shop(id):
     # data = (sname)
     inv = execute_query(db_connection, query).fetchall()
     print(inv)
-    return render_template('shop.html', name=shopInfo[0][0], inv=inv)
+
+    query = "SELECT shopkeepId, shopkeep FROM Shops WHERE Shops.id = '%d';" % (int(id))
+    shopNpcs = execute_query(db_connection, query).fetchall()
+    return render_template('shop.html', name=shopInfo[0][0], inv=inv, npcs = shopNpcs)
+
+
+# Displays the relevant NPC information on the npc html page
+@app.route('/npc/<id>', methods=['POST', 'GET'])
+def npc(id):
+    print("fetching npc stuff")
+    db_connection = connect_to_database()
+
+    query = "SELECT n.name, n.greeting, q.name, q.description, q.reward, n.id FROM NPCs n INNER JOIN NpcQuests nq ON n.id = nq.npcId INNER JOIN Quests q ON nq.questId = q.id WHERE n.id = %d;" % (int(id))
+    npc = execute_query(db_connection, query).fetchall()
+
+    print(npc)
+    #print(npc.__dict__)
+
+    return render_template('npc.html', npc = npc[0])
 
 
 # Nathans orignial shop page. I've been using this code for a lot of the edit screen stuff
