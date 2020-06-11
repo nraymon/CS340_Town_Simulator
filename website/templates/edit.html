@@ -35,17 +35,17 @@
         
 
         <h3>Add a Shop to Runswick</h3>
-        <form>
+        <form action="/edit/addShop" method="post">
             <label class="shopForm" id="shopName">Shop Name:</label><br>
-            <input class="shopForm" type="text" id="shopName" value="name"><br>
+            <input class="shopForm" type="text" id="shopName" name="shopName" value="name"><br>
             <label class="shopForm" id="shopKeep">Choose a shop keeper:</label><br>
-            <select class="shopForm" id="shopNpc">
-                <option value="jacob_the_tanner">Jacob the tanner</option>
-                <option value="nezeim_bhammein">Nezeim Bhammein</option>
-                <option value="althea_the_sorceror">Althea the sorceror</option>
+            <select class="shopForm" id="shopNpc" name="shop">
+		{% for n in npcs %}
+                <option value="{{ n.2 }}">{{ n.0 }}</option>
+                {% endfor %}
             </select><br>
             <label class="shopForm" id="shopDesc">Description of shop:</label><br>
-            <input class="shopForm" type="text" value="Describe the shop"><br>
+            <input class="shopForm" type="text" value="Describe the shop" name="desc"><br>
             <input class="shopForm" type="submit" value="Submit">
         </form>
         
@@ -126,19 +126,18 @@
             <input type="submit" value="Submit">
         </form>
         <h3>Add an NPC to a Shop</h3>
-        <form>
+        <form action="/edit/addNPCtoShop" method="post">
             <label for="npc">Add NPC</label>
-            <select id="npc">
-                <option value="jacob_the_tanner">Jacob the tanner</option>
-                <option value="nezeim_bhammein">Nezeim Bhammein</option>
-                <option value="althea_the_sorceror">Althea the sorceror</option>
+            <select id="npc" name="npcToShop">
+		{% for n in npcs %}
+                <option value="{{ n.2 }}">{{ n.0 }}</option>
+                {% endfor %}
             </select>
             <label for="shop">to Shop</label>
-            <select id="shop">
-                <option value="tavern">Tavern</option>
-                <option value="fishmarket">Fishmarket</option>
-                <option value="tannery">Tannery</option>
-                <option value="general_store">General Store</option>
+            <select id="shop" name="shopToNpc">
+		{% for shop in shops %}
+                <option value="{{ shop.3 }}">{{ shop.0 }}</option>
+                {% endfor %}
             </select>
             <input type="submit" value="Submit">
         </form>

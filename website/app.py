@@ -191,6 +191,26 @@ def editAddNPC():
     return redirect("/edit", code=302)
 
 
+# adds a shop to the DB
+@app.route('/edit/addShop', methods=['POST'])
+def addShop():
+    db_connection = connect_to_database()
+
+    if request.method == 'POST':
+
+        shopName = request.form['shopName']
+        shopDesc = request.form['desc']
+        shopKeepId = request.form['shop']
+        shopKeepQuery = "SELECT name FROM NPCs WHERE id = '%s';" % (shopKeepId)
+        shopKeepName = execute_query(db_connection, shopKeepQuery).fetchall()
+
+        print(shopKeepName[0][0])
+
+        query = "INSERT INTO Shops (shopkeep, shopkeepId, shopName, shopDescription) VALUES('%s', '%s', '%s', '%s');" % (shopKeepName[0][0], shopKeepId, shopName, shopDesc)
+        execute_query(db_connection, query)
+        return redirect("/edit", code=302)
+
+
 # add quests to the database
 @app.route('/edit/addQuest', methods=['POST'])
 def editAddQuest():
@@ -280,6 +300,22 @@ def addQuestToNpc():
         execute_query(db_connection, query)
 
         return redirect("/edit", code=302)
+
+
+# adds an npc to a shop or 'location'
+@app.route('/edit/addNPCtoShop', methods=['POST'])
+def addNPCtoShop():
+    db_connection = connect_to_database()
+
+    if request.method == 'POST':
+
+        npcId = request.form["npcToShop"]
+        shopId = request.form["shopToNpc"]
+
+        query = "INSERT INTO Locations (npcId, shopid) VALUES ('%s', '%s');" % (npcId, shopId)
+        execute_query(db_connection, query)
+
+        return redirect("/edit", code=302) 
 
 
 # basic edit screen rendering
