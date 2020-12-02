@@ -1,4 +1,4 @@
-CS340 Intro to Databases Town Simulator Project
+# CS340 Intro to Databases Town Simulator Project
 
 ### Description
 
